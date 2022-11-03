@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductItem from '../components/ProductItem';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Products = () => {
-  const [products] = React.useState([]);
+  const products = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: 'products/LOAD_PRODUCTS',
+    });
+  }, [dispatch]);
+
   const addFavorite = (id) => {
     console.log('Adding product to favorite', id);
   };
