@@ -10,10 +10,6 @@ const Products = () => {
     dispatch({
       type: 'products/LOAD_PRODUCTS',
     });
-
-    dispatch({
-      type: 'products/BOXING_DAY_OFFERS',
-    });
   }, [dispatch]);
 
   const addFavorite = (id) => {
