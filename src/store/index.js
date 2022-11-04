@@ -3,14 +3,17 @@ import { combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import productsReducer from './products';
 import { addLoggingOnDispatch } from '../add-ons/enhancers';
-import { loggerMiddleware } from '../add-ons/middleware';
+import { loggerMiddleware, blockActionMiddleware } from '../add-ons/middleware';
 
 const rootReducer = combineReducers({
   products: productsReducer,
 });
 
 const composedEnhancer = compose(addLoggingOnDispatch);
-const middlewareEnhancer = applyMiddleware(loggerMiddleware);
+const middlewareEnhancer = applyMiddleware(
+  loggerMiddleware,
+  blockActionMiddleware
+);
 
 // create the store
 const store = createStore(
