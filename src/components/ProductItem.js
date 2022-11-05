@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoIosAdd } from 'react-icons/io';
+import { useDispatch, useSelector } from 'react-redux';
 
-const ProductItem = ({ item, onFavorite, onCartAdd }) => {
+const selectProductById = (state, id) => {
+  return state.products.products.find((prod) => prod.id === id);
+};
+
+const ProductItem = ({ productId }) => {
+  const item = useSelector((state) => selectProductById(state, productId));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('Product Item changed', productId);
+  });
+
+  const onFavorite = (id) => {
+    dispatch({
+      type: 'favorites/ADD_FAVORITE',
+      payload: id,
+    });
+  };
+  const addToCart = (id) => {
+    console.log('Adding product to cart', id);
+  };
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
       {item.text}
@@ -18,7 +39,7 @@ const ProductItem = ({ item, onFavorite, onCartAdd }) => {
           )}
         </button>
         <button
-          onClick={() => onCartAdd(item.id)}
+          onClick={() => addToCart(item.id)}
           className="btn btn-secondary"
         >
           <IoIosAdd size={24} />
