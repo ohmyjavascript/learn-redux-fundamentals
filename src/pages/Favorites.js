@@ -5,9 +5,11 @@ import { useSelector } from 'react-redux';
 const Favorites = () => {
   const favoriteIds = useSelector((state) => state.favorites);
   const favoriteItems = useSelector((state) => {
-    return favoriteIds.map((id) =>
-      state.products.products.find((item) => item.id === id)
-    );
+    const productsMap = {};
+    state.products.products.map((prod) => {
+      return (productsMap[prod.id] = prod);
+    });
+    return favoriteIds.map((id) => productsMap[id]);
   });
   return (
     <ul className="list-group">
