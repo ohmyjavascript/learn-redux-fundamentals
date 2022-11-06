@@ -5,7 +5,7 @@ import productsReducer from './products';
 import favoritesReducer from './favorites';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { productAPIMiddleware } from '../add-ons/middleware';
+import thunkMiddleware from 'redux-thunk';
 
 const persistConfig = {
   key: 'root',
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   products: productsReducer,
   favorites: favoritesReducer,
 });
-const middlewareEnhancer = applyMiddleware(productAPIMiddleware);
+const middlewareEnhancer = applyMiddleware(thunkMiddleware);
 const peristedReducer = persistReducer(persistConfig, rootReducer);
 
 // create the store

@@ -1,9 +1,18 @@
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 // Initial state object
 const INITIAL_STATE = {
   products: [],
 };
+
+export async function fetchProducts(dispatch, getState) {
+  const response = await axios.get('https://fakestoreapi.com/products');
+  dispatch({
+    type: 'products/LOAD_PRODUCTS',
+    payload: response.data,
+  });
+}
 
 function productsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
