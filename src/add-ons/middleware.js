@@ -1,4 +1,5 @@
-// S ---> N --> ACK
+import axios from 'axios';
+
 export const loggerMiddleware = (store) => (next) => (action) => {
   console.log('Dispatching an action', action);
   let result = next(action);
@@ -13,4 +14,16 @@ export const blockActionMiddleware = (store) => (next) => (action) => {
   } else {
     next(action);
   }
+};
+
+export const productAPIMiddleware = (store) => (next) => (action) => {
+  if (action.type === 'products/LOAD_PRODUCTS_INIT') {
+    axios.get('https://fakestoreapi.com/products').then((res) => {
+      store.dispatch({
+        type: 'products/LOAD_PRODUCTS',
+        payload: res.data,
+      });
+    });
+  }
+  return next(action);
 };
