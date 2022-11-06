@@ -13,7 +13,7 @@ const Products = () => {
 
   useEffect(() => {
     if (productIds.length === 0) {
-      dispatch(fetchProducts());
+      dispatch(fetchProducts);
     }
   }, [dispatch, productIds]);
 
