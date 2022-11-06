@@ -26,7 +26,7 @@ const ProductItem = ({ productId }) => {
   };
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
-      {item.text}
+      {item.title.slice(0, 30)}
       <div>
         <button
           onClick={() => onFavorite(item.id)}

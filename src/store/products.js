@@ -8,9 +8,10 @@ const INITIAL_STATE = {
 function productsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'products/LOAD_PRODUCTS':
+      const sliced = action.payload.slice(0, 8);
       return {
         ...state,
-        products: state.products.length === 0 ? [] : state.products,
+        products: sliced,
       };
 
     case 'product/ADD_PRODUCT':
