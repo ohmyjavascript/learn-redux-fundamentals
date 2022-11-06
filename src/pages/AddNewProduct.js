@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { saveProducts } from '../store/products';
 
 const AddNewProduct = () => {
   const [title, setTitle] = useState('');
@@ -22,10 +23,7 @@ const AddNewProduct = () => {
       category,
       price,
     };
-    dispatch({
-      type: 'product/ADD_PRODUCT',
-      payload: product,
-    });
+    dispatch(saveProducts(product));
     navigate('/');
   };
 

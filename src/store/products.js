@@ -14,6 +14,27 @@ export async function fetchProducts(dispatch, getState) {
   });
 }
 
+export function saveProducts(product) {
+  return async function saveNewProductToDB(dispatch, getState) {
+    product.rating = {
+      rate: 0,
+      count: 0,
+    };
+    const post = JSON.stringify(product);
+    const response = await axios.post(
+      'https://fakestoreapi.com/products',
+      post
+    );
+    dispatch({
+      type: 'product/ADD_PRODUCT',
+      payload: {
+        id: response.data.id,
+        ...product,
+      },
+    });
+  };
+}
+
 function productsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'products/LOAD_PRODUCTS':
@@ -24,17 +45,9 @@ function productsReducer(state = INITIAL_STATE, action) {
       };
 
     case 'product/ADD_PRODUCT':
-      const { title, price, category } = action.payload;
-      const newProduct = {
-        text: title,
-        price,
-        category,
-        id: uuidv4(),
-        isFavorite: false,
-      };
       return {
         ...state,
-        products: [...state.products, newProduct],
+        products: [...state.products, action.payload],
       };
 
     case 'favorites/ADD_FAVORITE':
