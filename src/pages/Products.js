@@ -12,13 +12,15 @@ const Products = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get('https://fakestoreapi.com/products').then((res) => {
-      dispatch({
-        type: 'products/LOAD_PRODUCTS',
-        payload: res.data,
+    if (productIds.length === 0) {
+      axios.get('https://fakestoreapi.com/products').then((res) => {
+        dispatch({
+          type: 'products/LOAD_PRODUCTS',
+          payload: res.data,
+        });
       });
-    });
-  }, [dispatch]);
+    }
+  }, [dispatch, productIds]);
 
   if (productIds.length === 0) {
     return (
