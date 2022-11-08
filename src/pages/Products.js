@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import ProductItem from '../components/ProductItem';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchProducts } from '../store/products';
-
-const selectProductIds = (state) =>
-  state.products.products.map((prod) => prod.id);
+import { fetchProducts } from '../store/products/actions';
+import { selectProductIds } from '../store/products/selectors';
 
 const Products = () => {
-  const productIds = useSelector(selectProductIds, shallowEqual);
+  const productIds = useSelector(selectProductIds);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -2,13 +2,10 @@ import React, { useEffect } from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoIosAdd } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
-
-const selectProductById = (state, id) => {
-  return state.products.products.find((prod) => prod.id === id);
-};
+import { selectProductById } from '../store/products/selectors';
 
 const ProductItem = ({ productId }) => {
-  const item = useSelector((state) => selectProductById(state, productId));
+  const item = useSelector(selectProductById(productId));
   const dispatch = useDispatch();
 
   useEffect(() => {
