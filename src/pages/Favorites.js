@@ -1,5 +1,5 @@
 import React from 'react';
-import FavoriteItem from '../components/FavoriteItem';
+import FavoriteItem from 'components/FavoriteItem';
 import { useSelector } from 'react-redux';
 
 const Favorites = () => {

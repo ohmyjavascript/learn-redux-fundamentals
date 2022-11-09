@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoIosAdd } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProductById } from '../store/products/selectors';
+import { selectProductById } from 'store/products/selectors';
 
 const ProductItem = ({ productId }) => {
   const item = useSelector(selectProductById(productId));
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log('Product Item changed', productId);
-  });
 
   const onFavorite = (id) => {
     dispatch({

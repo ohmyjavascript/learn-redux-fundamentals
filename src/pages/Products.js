@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import ProductItem from '../components/ProductItem';
+import ProductItem from 'components/ProductItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchProducts } from '../store/products/actions';
-import { selectProductIds } from '../store/products/selectors';
+import { fetchProducts } from 'store/products/actions';
+import { selectProductIds } from 'store/products/selectors';
 
 const Products = () => {
   const productIds = useSelector(selectProductIds);
