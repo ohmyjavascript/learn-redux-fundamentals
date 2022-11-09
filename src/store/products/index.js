@@ -1,15 +1,24 @@
 // Initial state object
 const INITIAL_STATE = {
   products: [],
+  isLoaded: false,
+  isLoading: false,
 };
 
 function productsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case 'products/LOAD_PRODUCTS_INIT':
+      return {
+        ...state,
+        isLoading: true,
+      };
     case 'products/LOAD_PRODUCTS':
       const sliced = action.payload.slice(0, 8);
       return {
         ...state,
         products: sliced,
+        isLoaded: true,
+        isLoading: false,
       };
 
     case 'product/ADD_PRODUCT':

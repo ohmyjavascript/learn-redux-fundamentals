@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+export const loadProductInit = () => {
+  return {
+    type: 'products/LOAD_PRODUCTS_INIT',
+  };
+};
+
 export const loadProductAction = (products) => {
   return {
     type: 'products/LOAD_PRODUCTS',
@@ -18,6 +24,7 @@ export const saveProductAction = (id, product) => {
 };
 
 export async function fetchProducts(dispatch, getState) {
+  dispatch(loadProductInit());
   const response = await axios.get('https://fakestoreapi.com/products');
   dispatch(loadProductAction(response.data));
 }

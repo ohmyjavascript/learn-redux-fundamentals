@@ -11,3 +11,8 @@ export const selectProductById = (id) => {
     (products) => products.products.find((prod) => prod.id === id)
   );
 };
+
+export const selectProductIsLoading = createSelector(
+  (state) => state.products,
+  (products) => products.isLoading
+);
