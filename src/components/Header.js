@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { selectFavoriteItemsCount } from 'store/favorites/selectors';
 
 const Header = () => {
-  const favoriteItems = useSelector((state) => {
-    return state.products.products.reduce((accumulator, item) => {
-      return item.isFavorite ? accumulator + 1 : accumulator;
-    }, 0);
-  });
+  const favoriteItems = useSelector(selectFavoriteItemsCount);
   return (
     <div className="navbar navbar-dark bg-primary">
       <div className="navbar-header pull-left">

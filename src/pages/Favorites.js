@@ -1,16 +1,10 @@
 import React from 'react';
 import FavoriteItem from 'components/FavoriteItem';
 import { useSelector } from 'react-redux';
+import { selectFavorites } from 'store/favorites/selectors';
 
 const Favorites = () => {
-  const favoriteIds = useSelector((state) => state.favorites);
-  const favoriteItems = useSelector((state) => {
-    const productsMap = {};
-    state.products.products.map((prod) => {
-      return (productsMap[prod.id] = prod);
-    });
-    return favoriteIds.map((id) => productsMap[id]);
-  });
+  const favoriteItems = useSelector(selectFavorites);
   return (
     <ul className="list-group">
       {favoriteItems.map((item) => (
