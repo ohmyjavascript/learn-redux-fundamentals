@@ -2,17 +2,27 @@ import { createSelector } from 'reselect';
 
 export const selectProductIds = createSelector(
   (state) => state.products,
-  (products) => products.products.map((prod) => prod.id)
+  (products) => Object.keys(products.entities)
 );
 
 export const selectProductById = (id) => {
   return createSelector(
     (state) => state.products,
-    (products) => products.products.find((prod) => prod.id === id)
+    (products) => products.entities[id]
   );
 };
 
 export const selectProductIsLoading = createSelector(
   (state) => state.products,
   (products) => products.isLoading
+);
+
+export const selectHasProductCount = createSelector(
+  (state) => state.products,
+  (products) => !!Object.keys(products.entities).length > 0
+);
+
+export const selectProductIsLoaded = createSelector(
+  (state) => state.products,
+  (products) => products.isLoaded
 );

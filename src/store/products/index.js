@@ -7,7 +7,7 @@ import {
 
 // Initial state object
 const INITIAL_STATE = {
-  products: [],
+  entities: {},
   isLoaded: false,
   isLoading: false,
 };
@@ -21,9 +21,15 @@ function productsReducer(state = INITIAL_STATE, action) {
       };
     case LOAD_PRODUCTS:
       const sliced = action.payload.slice(0, 8);
+      const entities = sliced.reduce((acc, item) => {
+        return {
+          ...acc,
+          [item.id]: item,
+        };
+      }, {});
       return {
         ...state,
-        products: sliced,
+        entities: entities,
         isLoaded: true,
         isLoading: false,
       };
@@ -31,20 +37,21 @@ function productsReducer(state = INITIAL_STATE, action) {
     case ADD_PRODUCT:
       return {
         ...state,
-        products: [...state.products, action.payload],
+        entities: {
+          ...state.entities,
+          [action.payload.id]: action.payload,
+        },
       };
 
     case ADD_FAVORITE:
+      const changedEntity = state.entities[action.payload];
+      changedEntity.isFavorite = !changedEntity.isFavorite;
       return {
         ...state,
-        products: state.products.map((prod) => {
-          return prod.id === action.payload
-            ? {
-                ...prod,
-                isFavorite: !prod.isFavorite,
-              }
-            : prod;
-        }),
+        entities: {
+          ...state.entities,
+          [action.payload]: changedEntity,
+        },
       };
     default:
       return state;

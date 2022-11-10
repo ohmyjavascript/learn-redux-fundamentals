@@ -4,11 +4,7 @@ export const selectFavorites = createSelector(
   (state) => state.products,
   (state) => state.favorites,
   (productsSlice, favoritesSlice) => {
-    const productsMap = {};
-    productsSlice.products.map((prod) => {
-      return (productsMap[prod.id] = prod);
-    });
-    return favoritesSlice.map((id) => productsMap[id]);
+    return favoritesSlice.map((favId) => productsSlice.entities[favId]);
   }
 );
 
