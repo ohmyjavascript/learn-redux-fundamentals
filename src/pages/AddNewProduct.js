@@ -9,7 +9,7 @@ const AddNewProduct = () => {
   const [image, setImage] = useState('');
   const [category, setCategory] = useState('Mobile');
   const [price, setPrice] = useState(0);
-  const [status] = useState('');
+  const [status, setStatus] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,7 +23,9 @@ const AddNewProduct = () => {
       category,
       price,
     };
-    dispatch(saveProducts(product));
+    setStatus('saving');
+    await dispatch(saveProducts(product));
+    setStatus('');
     navigate('/');
   };
 
