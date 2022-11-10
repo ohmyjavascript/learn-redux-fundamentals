@@ -1,21 +1,26 @@
 import axios from 'axios';
 
+export const LOAD_PRODUCTS_INIT = 'products/LOAD_PRODUCTS_INIT';
+export const LOAD_PRODUCTS = 'products/LOAD_PRODUCTS';
+export const ADD_PRODUCT = 'product/ADD_PRODUCT';
+export const ADD_FAVORITE = 'favorites/ADD_FAVORITE';
+
 export const loadProductInit = () => {
   return {
-    type: 'products/LOAD_PRODUCTS_INIT',
+    type: LOAD_PRODUCTS_INIT,
   };
 };
 
 export const loadProductAction = (products) => {
   return {
-    type: 'products/LOAD_PRODUCTS',
+    type: LOAD_PRODUCTS,
     payload: products,
   };
 };
 
 export const saveProductAction = (id, product) => {
   return {
-    type: 'product/ADD_PRODUCT',
+    type: ADD_PRODUCT,
     payload: {
       id,
       ...product,
