@@ -1,25 +1,19 @@
-import {
-  LOAD_PRODUCTS_INIT,
-  LOAD_PRODUCTS,
-  ADD_PRODUCT,
-  ADD_FAVORITE,
-} from './actions';
+import { createSlice } from '@reduxjs/toolkit';
 
-// Initial state object
-const INITIAL_STATE = {
+const initialState = {
   entities: {},
   isLoaded: false,
   isLoading: false,
 };
 
-function productsReducer(state = INITIAL_STATE, action) {
-  switch (action.type) {
-    case LOAD_PRODUCTS_INIT:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case LOAD_PRODUCTS:
+const productSlice = createSlice({
+  name: 'products',
+  initialState,
+  reducers: {
+    loadProductsInit(state, action) {
+      state.isLoading = true;
+    },
+    loadAllProducts(state, action) {
       const sliced = action.payload.slice(0, 8);
       const entities = sliced.reduce((acc, item) => {
         return {
@@ -27,35 +21,22 @@ function productsReducer(state = INITIAL_STATE, action) {
           [item.id]: item,
         };
       }, {});
-      return {
-        ...state,
-        entities: entities,
-        isLoaded: true,
-        isLoading: false,
-      };
-
-    case ADD_PRODUCT:
-      return {
-        ...state,
-        entities: {
-          ...state.entities,
-          [action.payload.id]: action.payload,
-        },
-      };
-
-    case ADD_FAVORITE:
+      state.entities = entities;
+      state.isLoading = false;
+      state.isLoaded = true;
+    },
+    addFavorite(state, action) {
       const changedEntity = state.entities[action.payload];
       changedEntity.isFavorite = !changedEntity.isFavorite;
-      return {
-        ...state,
-        entities: {
-          ...state.entities,
-          [action.payload]: changedEntity,
-        },
-      };
-    default:
-      return state;
-  }
-}
+      state.entities[action.payload.id] = action.payload.product;
+    },
+    saveProduct(state, action) {
+      state.entities[action.payload.id] = action.payload.product;
+    },
+  },
+});
 
-export default productsReducer;
+export const { loadAllProducts, loadProductsInit, addFavorite, saveProduct } =
+  productSlice.actions;
+
+export default productSlice.reducer;
