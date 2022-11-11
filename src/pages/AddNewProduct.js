@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { saveProducts } from 'store/products/actions';
+import { saveProductToDB } from 'store/products/actions';
 
 const AddNewProduct = () => {
   const [title, setTitle] = useState('');
@@ -24,7 +25,7 @@ const AddNewProduct = () => {
       price,
     };
     setStatus('saving');
-    await dispatch(saveProducts(product));
+    await dispatch(saveProductToDB(product));
     setStatus('');
     navigate('/');
   };

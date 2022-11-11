@@ -1,18 +1,23 @@
-import { ADD_FAVORITE } from 'store/products/actions';
+import { createSlice } from '@reduxjs/toolkit';
 
-const INIT_STATE = [];
+const initialState = [];
 
-function favoritesReducer(state = INIT_STATE, action) {
-  switch (action.type) {
-    case ADD_FAVORITE:
-      const itemID = state.includes(action.payload);
-      if (!itemID) {
-        return [...state, action.payload];
+const favoriteSlice = createSlice({
+  name: 'favorites',
+  initialState,
+  reducers: {
+    addFavoriteItem(state, action) {
+      if (state.length === 0) {
+        return [action.payload];
       }
-      return state.filter((item) => item !== action.payload);
-    default:
-      return state;
-  }
-}
+      const isExisting = !!state.find((item) => item === action.payload);
+      if (isExisting) {
+        return state.filter((item) => item !== action.payload);
+      }
+      return state.concat(action.payload);
+    },
+  },
+});
 
-export default favoritesReducer;
+export const { addFavoriteItem } = favoriteSlice.actions;
+export default favoriteSlice.reducer;
