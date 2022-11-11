@@ -1,11 +1,20 @@
-import { legacy_createStore as createStore } from 'redux';
-import { combineReducers, applyMiddleware } from 'redux';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
+// reducer
 import productsReducer from './products';
 import favoritesReducer from './favorites';
-import { persistStore, persistReducer } from 'redux-persist';
+
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import thunkMiddleware from 'redux-thunk';
 
 const persistConfig = {
   key: 'root',
@@ -17,12 +26,17 @@ const rootReducer = combineReducers({
   products: productsReducer,
   favorites: favoritesReducer,
 });
-const middlewareEnhancer = applyMiddleware(thunkMiddleware);
-const peristedReducer = persistReducer(persistConfig, rootReducer);
 
-// create the store
-export const store = createStore(
-  peristedReducer,
-  composeWithDevTools(middlewareEnhancer)
-);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
+
 export const persistor = persistStore(store);
