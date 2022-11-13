@@ -21,7 +21,7 @@ const Products = () => {
 
   useEffect(() => {
     if (!isLoaded) {
-      dispatch(fetchProducts);
+      dispatch(fetchProducts());
     }
   }, [dispatch, isLoaded]);
 
