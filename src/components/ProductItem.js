@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectProductById } from 'store/products/selectors';
 import { addFavoriteItem } from 'store/favorites';
 import { addFavorite } from 'store/products';
+import { addToCart } from 'store/cart';
 
 const ProductItem = ({ productId }) => {
   const item = useSelector(selectProductById(productId));
@@ -14,8 +15,8 @@ const ProductItem = ({ productId }) => {
     dispatch(addFavorite(id));
     dispatch(addFavoriteItem(id));
   };
-  const addToCart = (id) => {
-    console.log('Adding product to cart', id);
+  const onAddCart = (id) => {
+    dispatch(addToCart(id));
   };
   if (!item) {
     return;
@@ -35,7 +36,7 @@ const ProductItem = ({ productId }) => {
           )}
         </button>
         <button
-          onClick={() => addToCart(item.id)}
+          onClick={() => onAddCart(item.id)}
           className="btn btn-secondary"
         >
           <IoIosAdd size={24} />
