@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 // reducer
 import productsReducer from './products';
 import favoritesReducer from './favorites';
+import cartReducer from './cart';
 
 import {
   persistReducer,
@@ -25,6 +26,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   products: productsReducer,
   favorites: favoritesReducer,
+  carts: cartReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
